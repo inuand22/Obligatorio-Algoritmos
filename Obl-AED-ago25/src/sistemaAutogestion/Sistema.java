@@ -1,7 +1,6 @@
 package sistemaAutogestion;
 
 //Agregar aquí nombres y números de estudiante de los integrantes del equipo
-
 public class Sistema implements IObligatorio {
 
     @Override
@@ -11,46 +10,61 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno registrarEstacion(String nombre, String barrio, int capacidad) {
+        //VERIFICAR EN SISTEMA QUE NO EXISTA ESTACIÓN CON MISMO NOMBRE
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno registrarUsuario(String cedula, String nombre) {
+        //VERIFICAR EN SISTEMA QUE NO EXISTA USUARIO CON MISMA CEDULA
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno registrarBicicleta(String codigo, String tipo) {
+        //VERIFICAR EN SISTEMA QUE NO EXISTA BICICLETA CON MISMO CODIGO
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+        //VERIFICAR EN SISTEMA QUE: EXISTA BICI; BICI NO ESTE ALQUILADA; BICI NO ESTE EN MANTENIMIENTO
+        //NIGÚN PARÁMETRO NULO O VACIO
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno repararBicicleta(String codigo) {
+        //VERIFICAR EN SISTEMA QUE: EXISTA BICI; BICI NO ESTE EN MANTENIMIENTO
+        //NIGÚN PARÁMETRO NULO O VACIO
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno eliminarEstacion(String nombre) {
+        //VERIFICAR EN SISTEMA QUE: EXISTE ESTACION; NO TIENE BICI ANCLADA, COLA PENDIENTE DE USUARIO PARA ALQUILER O ENTREGA
+        //NIGÚN PARÁMETRO NULO O VACIO
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
+        //VERIFICAR EN SISTEMA QUE: EXISTE BICI; EXISTE ESTACION; ESTACION SIN ANCLAJES LIBRES; BICI NO DISPONIBLE (NO REPARADA == ENMANTENIMIENTO)
+        //NIGÚN PARÁMETRO NULO O VACIO
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {
+        //NIGÚN PARÁMETRO NULO O VACIO
+        //VERIFICAR EN SISTEMA QUE: USUARIO EXISTE; EXISTE ESTACION
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno devolverBicicleta(String cedula, String nombreEstacionDestino) {
+        //NIGÚN PARÁMETRO NULO O VACIO
+        //VERIFICAR EN SISTEMA QUE:USUARIO EXISTE; ESTACION EXISTE; USUARIO TIENE BICI ALQUILADA EN SISTEMA
         return Retorno.noImplementada();
     }
 
