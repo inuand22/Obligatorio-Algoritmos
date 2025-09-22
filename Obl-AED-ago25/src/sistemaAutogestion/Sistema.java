@@ -1,23 +1,68 @@
 package sistemaAutogestion;
 
 //Agregar aquí nombres y números de estudiante de los integrantes del equipo
+import dominio.Alquiler;
+import dominio.Barrio;
+import dominio.Bicicleta;
+import dominio.Deposito;
+import dominio.Estacion;
+import dominio.Mantenimiento;
+import dominio.Usuario;
+import tads.Lista;
+
 public class Sistema implements IObligatorio {
+
+    Lista<Alquiler> listaAlquiler;
+    Lista<Barrio> listaBarrio;
+    Lista<Bicicleta> listaBicicleta;
+    Lista<Deposito> listaDeposito;
+    Lista<Estacion> listaEstacion;
+    Lista<Mantenimiento> listaMantenimiento;
+    Lista<Usuario> listaUsuario;
+
+    public Sistema() {
+        listaAlquiler = new Lista<Alquiler>();
+        listaBarrio = new Lista<Barrio>();
+        listaBicicleta = new Lista<Bicicleta>();
+        listaDeposito = new Lista<Deposito>();
+        listaEstacion = new Lista<Estacion>();
+        listaMantenimiento = new Lista<Mantenimiento>();
+        listaUsuario = new Lista<Usuario>();
+    }
 
     @Override
     public Retorno crearSistemaDeGestion() {
-        return Retorno.noImplementada();
+        listaAlquiler = new Lista<Alquiler>();
+        listaBarrio = new Lista<Barrio>();
+        listaBicicleta = new Lista<Bicicleta>();
+        listaDeposito = new Lista<Deposito>();
+        listaEstacion = new Lista<Estacion>();
+        listaMantenimiento = new Lista<Mantenimiento>();
+        listaUsuario = new Lista<Usuario>();
+        return Retorno.ok();
     }
 
     @Override
     public Retorno registrarEstacion(String nombre, String barrio, int capacidad) {
-        //VERIFICAR EN SISTEMA QUE NO EXISTA ESTACIÓN CON MISMO NOMBRE
-        return Retorno.noImplementada();
+        Estacion estacion = new Estacion(nombre, barrio, capacidad);
+        if (!listaEstacion.existeElemento(estacion)) {
+            listaEstacion.agregarInicio(estacion);
+            return Retorno.ok();
+        } else {
+            return Retorno.error1();
+        }
     }
 
     @Override
     public Retorno registrarUsuario(String cedula, String nombre) {
         //VERIFICAR EN SISTEMA QUE NO EXISTA USUARIO CON MISMA CEDULA
-        return Retorno.noImplementada();
+        Usuario usuario = new Usuario(cedula, nombre);
+        if (!listaUsuario.existeElemento(usuario)) {
+            listaUsuario.agregarInicio(usuario);
+            return Retorno.ok();
+        } else {
+            return Retorno.error1();
+        }
     }
 
     @Override

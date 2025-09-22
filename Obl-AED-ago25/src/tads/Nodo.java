@@ -28,5 +28,4 @@ public class Nodo<T> {
     public void setSiguiente(Nodo siguiente) {
         this.siguiente = siguiente;
     }
-
 }

@@ -10,7 +10,7 @@ import java.util.Set;
  *
  * @author USUARIO
  */
-public class Lista implements ILista {
+public class Lista<T> implements ILista {
 
     private Nodo inicio;
     private int cantidadElementos;
@@ -29,7 +29,28 @@ public class Lista implements ILista {
     public void agregarInicio(Object n) {
         Nodo nodo = new Nodo();
         nodo.setDato(n);
+        nodo.setSiguiente(inicio);
+        inicio = nodo;
+        cantidadElementos++;
+    }
 
+    @Override
+    public void vaciar() {
+        inicio = null;
+    }
+
+    @Override
+    public boolean existeElemento(Object elemento) {
+        boolean existe = false;
+        Nodo aux = inicio;
+        while ((aux != null) && (!existe)) {
+            if (aux.getDato().equals(elemento)) {
+                existe = true;
+            } else {
+                aux = aux.getSiguiente();
+            }
+        }
+        return existe;
     }
 
     @Override
@@ -44,11 +65,6 @@ public class Lista implements ILista {
 
     @Override
     public void borrarFin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void vaciar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

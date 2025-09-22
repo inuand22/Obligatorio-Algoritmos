@@ -24,6 +24,8 @@ public interface ILista<T> {
 
     public void mostrar();
 
+    public boolean existeElemento(T n);
+
     /*
     public void agregarOrd(int n);
 
