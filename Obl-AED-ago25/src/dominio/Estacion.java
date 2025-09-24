@@ -5,6 +5,7 @@
 package dominio;
 
 import java.util.Objects;
+import tads.Lista;
 
 /**
  *
@@ -15,10 +16,10 @@ public class Estacion implements IValidable {
     private String nombre;
     private String barrio;
     private int capacidad;
-    
-    //LISTA DE BICICLETAS 
-    //LISTA DE USUARIOS EN ESPERA PARA ALQUILAR
-    //LISTA DE USUARIOS EN ESPERA PARA ANCLAR BICICLETA
+
+    private Lista<Bicicleta> bicicletasEnEstacion = new Lista<Bicicleta();
+    private Lista<Usuario> usuariosEnEsperaAlquilar = new Lista<Usuario>();
+    private Lista<Usuario> usuarioEnEsperaAnclar = new Lista<Usuario>();
 
     public Estacion(String Nombre, String Barrio, int Capacidad) {
         nombre = Nombre;
@@ -49,6 +50,30 @@ public class Estacion implements IValidable {
 
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
+    }
+
+    public Lista<Bicicleta> getBicicletasEnEstacion() {
+        return bicicletasEnEstacion;
+    }
+
+    public void setBicicletasEnEstacion(Lista<Bicicleta> bicicletasEnEstacion) {
+        this.bicicletasEnEstacion = bicicletasEnEstacion;
+    }
+
+    public Lista<Usuario> getUsuariosEnEsperaAlquilar() {
+        return usuariosEnEsperaAlquilar;
+    }
+
+    public void setUsuariosEnEsperaAlquilar(Lista<Usuario> usuariosEnEsperaAlquilar) {
+        this.usuariosEnEsperaAlquilar = usuariosEnEsperaAlquilar;
+    }
+
+    public Lista<Usuario> getUsuarioEnEsperaAnclar() {
+        return usuarioEnEsperaAnclar;
+    }
+
+    public void setUsuarioEnEsperaAnclar(Lista<Usuario> usuarioEnEsperaAnclar) {
+        this.usuarioEnEsperaAnclar = usuarioEnEsperaAnclar;
     }
 
     @Override

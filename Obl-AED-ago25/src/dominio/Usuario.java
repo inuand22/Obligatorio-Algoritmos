@@ -46,8 +46,6 @@ public class Usuario implements IValidable {
     public void setEnEspera(boolean enEspera) {
         this.enEspera = enEspera;
     }
-    
-    
 
     @Override
     public boolean equals(Object obj) {
@@ -67,8 +65,8 @@ public class Usuario implements IValidable {
     @Override
     public String toString() {
         return "Usuario{" + "cedula=" + cedula + ", nombre=" + nombre + '}';
-    }   
-    
+    }
+
     @Override
     public void Validar() {
         //PREGUNTAR AL PROFE, PORQUE NO QUEREMOS QUE LA CEDULA LLEVE LETRAS, SI HAY QUE VERIFICARLO

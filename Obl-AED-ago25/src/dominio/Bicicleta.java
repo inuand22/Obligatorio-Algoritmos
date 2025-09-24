@@ -10,12 +10,17 @@ import java.util.Objects;
  *
  * @author USUARIO
  */
-public class Bicicleta implements IValidable {
+public class Bicicleta implements IValidable, Identificable {
 
     private String codigo;
     private Tipo tipo;
     private boolean enMantenimiento;
     private boolean estaAlquilada;
+
+    @Override
+    public String getPK() {
+        return codigo;
+    }
 
     public enum Tipo {
         URBANA,

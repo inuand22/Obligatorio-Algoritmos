@@ -31,7 +31,7 @@ public class Retorno {
         this.valorbooleano = valorbooleano;
         this.resultado = resultado;
     }
-    
+
     public int getValorEntero() {
         return valorEntero;
     }
@@ -59,7 +59,7 @@ public class Retorno {
     public static Retorno ok(String valorString) {
         return new Retorno(Resultado.OK, valorString);
     }
-    
+
     public static Retorno ok(int valorInt) {
         return new Retorno(Resultado.OK, "", valorInt);
     }

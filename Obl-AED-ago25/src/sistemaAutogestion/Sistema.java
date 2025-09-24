@@ -13,19 +13,22 @@ import tads.Lista;
 
 public class Sistema implements IObligatorio {
 
-    Lista<Alquiler> listaAlquiler;
-    Lista<Barrio> listaBarrio;
-    Lista<Bicicleta> listaBicicleta;
-    Lista<Deposito> listaDeposito;
-    Lista<Estacion> listaEstacion;
-    Lista<Mantenimiento> listaMantenimiento;
-    Lista<Usuario> listaUsuario;
+    private Lista<Alquiler> listaAlquiler;
+    private Lista<Barrio> listaBarrio;
+    private Lista<Bicicleta> listaBicicleta;
+    private final Deposito deposito;
+    private Lista<Estacion> listaEstacion;
+    private Lista<Mantenimiento> listaMantenimiento;
+    private Lista<Usuario> listaUsuario;
+    private Lista<Bicicleta> listaBicicletasEnMantenimiento;
 
     public Sistema() {
         listaAlquiler = new Lista<Alquiler>();
         listaBarrio = new Lista<Barrio>();
         listaBicicleta = new Lista<Bicicleta>();
-        listaDeposito = new Lista<Deposito>();
+        deposito = new Deposito();
+        deposito.setNombre("Centro");
+        deposito.setBicicletasEnMantenimiento(listaBicicletasEnMantenimiento);
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new Lista<Usuario>();
@@ -36,7 +39,8 @@ public class Sistema implements IObligatorio {
         listaAlquiler = new Lista<Alquiler>();
         listaBarrio = new Lista<Barrio>();
         listaBicicleta = new Lista<Bicicleta>();
-        listaDeposito = new Lista<Deposito>();
+        deposito.setNombre("Centro");
+        deposito.setBicicletasEnMantenimiento(listaBicicletasEnMantenimiento);
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new Lista<Usuario>();
@@ -56,7 +60,6 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno registrarUsuario(String cedula, String nombre) {
-        //VERIFICAR EN SISTEMA QUE NO EXISTA USUARIO CON MISMA CEDULA
         Usuario usuario = new Usuario(cedula, nombre);
         if (!listaUsuario.existeElemento(usuario)) {
             listaUsuario.agregarInicio(usuario);
@@ -68,8 +71,6 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno registrarBicicleta(String codigo, String tipo) {
-        
-        //VERIFICAR EN SISTEMA QUE NO EXISTA BICICLETA CON MISMO CODIGO
         Bicicleta.Tipo t = Bicicleta.Tipo.valueOf(tipo.trim().toUpperCase());
         Bicicleta bicicleta = new Bicicleta(codigo, t);
         if (!listaBicicleta.existeElemento(codigo)) {
@@ -78,56 +79,41 @@ public class Sistema implements IObligatorio {
         } else {
             return Retorno.error4();
         }
-        
+
     }
-
-
 
     @Override
-public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-    // Recorremos la lista de bicicletas con tus TADs
-    Nodo<Bicicleta> nodo = listaBicicleta
-
-    while (nodo != null) {
-        Bicicleta bici = nodo.getDato();
-
-        if (bici.getCodigo().equals(codigo)) {
-
-            bici.setEnMantenimiento(true);
-
-            
-            listaMantenimiento.agregarInicio(new Mantenimiento(codigo, motivo));
-
+    public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+        if (listaBicicleta.existeElemento(codigo)) {
+            Bicicleta bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(codigo);
+            if (bicicleta.isEstaAlquilada()) {
+                return Retorno.error3(); //bicicleta actualmente alquilada
+            }
+            if (bicicleta.isEnMantenimiento()) {
+                return Retorno.error4(); //bicicleta en mantenimiento
+            }
+            Mantenimiento mantenimiento = new Mantenimiento(codigo, motivo);
+            bicicleta.setEnMantenimiento(true);
+            listaBicicletasEnMantenimiento.agregarInicio(bicicleta);
             return Retorno.ok();
         }
-
-        nodo = nodo.getSiguiente();
+        return Retorno.error2();
     }
 
-    // Bicicleta no encontrada
-    return Retorno.error2();
-}
-    
-    
-    
     @Override
     public Retorno repararBicicleta(String codigo) {
-        //VERIFICAR EN SISTEMA QUE: EXISTA BICI; BICI NO ESTE EN MANTENIMIENTO
-        //NIGÚN PARÁMETRO NULO O VACIO
-    Nodo<Bicicleta> p = listaBicicleta.getInicio();
-
-    while (p != null) {
-        Bicicleta b = p.getDato();
-        if (b.getCodigo().equals(codigo)) {
-
-            b.setEnMantenimiento(false);
-            b.setEstaAlquilada(false);
-
+        if (codigo == null || codigo.trim().isEmpty()) {
+            return Retorno.error1();//Parametros null o vacío
+        }
+        if (listaBicicleta.existeElemento(codigo)) {
+            Bicicleta bicicleta = (Bicicleta) listaBicicletasEnMantenimiento.obtenerElemento(codigo);
+            if (bicicleta == null) {
+                return Retorno.error3(); //No se encontró bicicleta en mantenimiento
+            }
+            bicicleta.setEnMantenimiento(false);
             return Retorno.ok();
         }
-        p = p.getSiguiente();
-    }
-    return Retorno.error2();
+        return Retorno.error2();//No existe bicicleta
     }
 
     @Override

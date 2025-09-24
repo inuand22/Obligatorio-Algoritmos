@@ -26,6 +26,8 @@ public interface ILista<T> {
 
     public boolean existeElemento(T n);
 
+    public Object obtenerElemento(String valor);
+
     /*
     public void agregarOrd(int n);
 

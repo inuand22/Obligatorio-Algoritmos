@@ -12,6 +12,7 @@ public class Alquiler implements IValidable {
 
     private String cedula;
     private String nombreEstacion;
+    private String codigo;
 
     public Alquiler(String Cedula, String NombreEstacion) {
         cedula = Cedula;
@@ -27,6 +28,22 @@ public class Alquiler implements IValidable {
         this.cedula = cedula;
     }
 
+    public String getNombreEstacion() {
+        return nombreEstacion;
+    }
+
+    public void setNombreEstacion(String nombreEstacion) {
+        this.nombreEstacion = nombreEstacion;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     @Override
     public String toString() {
         return "Alquiler{" + "cedula=" + cedula + '}';
@@ -40,16 +57,6 @@ public class Alquiler implements IValidable {
         if (nombreEstacion == null || nombreEstacion.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre de la estación no puede ser nulo o vacío.");
         }
-        /*
-        // Verificar existencia de usuario y estación en el sistema
-        // (acá dependerá de cómo hayas implementado el acceso al Sistema)
-        if (!Sistema.getInstancia().existeUsuario(cedula)) {
-            throw new IllegalArgumentException("El usuario con cédula " + cedula + " no existe.");
-        }
-        if (!Sistema.getInstancia().existeEstacion(nombreEstacion)) {
-            throw new IllegalArgumentException("La estación " + nombreEstacion + " no existe.");
-        }
-         */
     }
 
 }

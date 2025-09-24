@@ -4,6 +4,9 @@
  */
 package dominio;
 
+import java.util.Objects;
+import tads.Lista;
+
 /**
  *
  * @author USUARIO
@@ -11,9 +14,42 @@ package dominio;
 public class Deposito {
 
     private String nombre;
-    //LISTA DE BICICLETAS EN MANTENIMIENTO
+    private Lista<Bicicleta> bicicletasEnMantenimiento = new Lista<Bicicleta>();
 
-    public Deposito(String Nombre) {
-        nombre = Nombre;
+    public String getNombre() {
+        return nombre;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Lista<Bicicleta> getBicicletasEnMantenimiento() {
+        return bicicletasEnMantenimiento;
+    }
+
+    public void setBicicletasEnMantenimiento(Lista<Bicicleta> bicicletasEnMantenimiento) {
+        this.bicicletasEnMantenimiento = bicicletasEnMantenimiento;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Deposito other = (Deposito) obj;
+        return Objects.equals(this.nombre, other.nombre);
+    }
+
+    @Override
+    public String toString() {
+        return "Deposito{" + "nombre=" + nombre + '}';
+    }
+
 }
