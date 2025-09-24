@@ -8,6 +8,7 @@ import dominio.Deposito;
 import dominio.Estacion;
 import dominio.Mantenimiento;
 import dominio.Usuario;
+import tads.Nodo;
 import tads.Lista;
 
 public class Sistema implements IObligatorio {
@@ -67,22 +68,66 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno registrarBicicleta(String codigo, String tipo) {
+        
         //VERIFICAR EN SISTEMA QUE NO EXISTA BICICLETA CON MISMO CODIGO
-        return Retorno.noImplementada();
+        Bicicleta.Tipo t = Bicicleta.Tipo.valueOf(tipo.trim().toUpperCase());
+        Bicicleta bicicleta = new Bicicleta(codigo, t);
+        if (!listaBicicleta.existeElemento(codigo)) {
+            listaBicicleta.agregarInicio(codigo);
+            return Retorno.ok();
+        } else {
+            return Retorno.error4();
+        }
+        
     }
+
+
 
     @Override
-    public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        //VERIFICAR EN SISTEMA QUE: EXISTA BICI; BICI NO ESTE ALQUILADA; BICI NO ESTE EN MANTENIMIENTO
-        //NIGÚN PARÁMETRO NULO O VACIO
-        return Retorno.noImplementada();
+public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+    // Recorremos la lista de bicicletas con tus TADs
+    Nodo<Bicicleta> nodo = listaBicicleta
+
+    while (nodo != null) {
+        Bicicleta bici = nodo.getDato();
+
+        if (bici.getCodigo().equals(codigo)) {
+
+            bici.setEnMantenimiento(true);
+
+            
+            listaMantenimiento.agregarInicio(new Mantenimiento(codigo, motivo));
+
+            return Retorno.ok();
+        }
+
+        nodo = nodo.getSiguiente();
     }
 
+    // Bicicleta no encontrada
+    return Retorno.error2();
+}
+    
+    
+    
     @Override
     public Retorno repararBicicleta(String codigo) {
         //VERIFICAR EN SISTEMA QUE: EXISTA BICI; BICI NO ESTE EN MANTENIMIENTO
         //NIGÚN PARÁMETRO NULO O VACIO
-        return Retorno.noImplementada();
+    Nodo<Bicicleta> p = listaBicicleta.getInicio();
+
+    while (p != null) {
+        Bicicleta b = p.getDato();
+        if (b.getCodigo().equals(codigo)) {
+
+            b.setEnMantenimiento(false);
+            b.setEstaAlquilada(false);
+
+            return Retorno.ok();
+        }
+        p = p.getSiguiente();
+    }
+    return Retorno.error2();
     }
 
     @Override
