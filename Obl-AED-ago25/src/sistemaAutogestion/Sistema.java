@@ -164,11 +164,54 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
-    @Override
+ @Override
     public Retorno informaciónMapa(String[][] mapa) {
-        return Retorno.noImplementada();
-    }
+        String mensaje = "";
+        int maxPorFila = 0;
+        for (int fila = 0; fila < mapa.length; fila++) {
+            int contador = 0;
+            for (int col = 0; col < mapa[fila].length; col++) {
+                if (mapa[fila][col] != "o") {
+                    contador++;
+                }
+            }
+            if (contador > maxPorFila) {
+                maxPorFila = contador;
+            }
+        }
+        int maxPorCol = 0;
+        boolean existe = false;
+        int contadorColumnasAscendentes = 0;
+        for (int col = 0; col < mapa[0].length; col++) {
+            int contadorCol = 0;
+            for (int fila = 0; fila < mapa.length; fila++) {
+                // usar Equals
+                if (mapa[fila][col] != "o") {
+                    contadorCol++;
+                }
+            }            
+            if (contadorCol > maxPorCol) {
+                maxPorCol = contadorCol;
+                contadorColumnasAscendentes++;
+            }else{
+                contadorColumnasAscendentes = 0;
+            }
+            if(contadorColumnasAscendentes >= 3){
+                existe = true;
+            }
+        }
+        String tipo = "";
+        if (maxPorFila == maxPorCol) {
+            tipo = "ambas";
+        } else if (maxPorFila > maxPorCol) {
+            tipo = "fila";
+        } else {
+            tipo = "columna";
+        }
 
+        return Retorno.ok(mensaje);
+    }
+    
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
         return Retorno.noImplementada();
