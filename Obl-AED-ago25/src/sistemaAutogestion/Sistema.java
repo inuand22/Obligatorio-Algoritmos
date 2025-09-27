@@ -21,6 +21,7 @@ public class Sistema implements IObligatorio {
     private Lista<Mantenimiento> listaMantenimiento;
     private Lista<Usuario> listaUsuario;
     private Lista<Bicicleta> listaBicicletasEnMantenimiento;
+    private Lista<Bicicleta> listaBicicletasEnDeposito;
 
     public Sistema() {
         listaAlquiler = new Lista<Alquiler>();
@@ -32,6 +33,7 @@ public class Sistema implements IObligatorio {
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new Lista<Usuario>();
+        listaBicicletasEnDeposito = new Lista<Bicicleta>();
     }
 
     @Override
@@ -44,6 +46,7 @@ public class Sistema implements IObligatorio {
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new Lista<Usuario>();
+        listaBicicletasEnDeposito = new Lista<Bicicleta>();
         return Retorno.ok();
     }
 
@@ -146,32 +149,46 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno deshacerUltimosRetiros(int n) {
+
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno obtenerUsuario(String cedula) {
-        return Retorno.noImplementada();
+        if (cedula == null || cedula.trim().isEmpty()) {
+            return Retorno.error1();//Parametros null o vacío
+        }
+        if (cedula.length() != 8) {
+            return Retorno.error2();
+        }
+        Usuario usuario = (Usuario) listaUsuario.obtenerElemento(cedula);
+        if (usuario == null) {
+            return Retorno.error3(); //No se encontró bicicleta en mantenimiento
+        } else {
+            return Retorno.ok();
+        }
     }
 
     @Override
     public Retorno listarUsuarios() {
-        return Retorno.noImplementada();
+        Lista<Usuario> retornoListaUsuarios = listaUsuario;
+        return Retorno.ok();
     }
 
     @Override
     public Retorno listarBicisEnDeposito() {
+        Lista<Bicicleta> retornoListaUsuarios = listaBicicletasEnDeposito;
         return Retorno.noImplementada();
     }
 
- @Override
+    @Override
     public Retorno informaciónMapa(String[][] mapa) {
         String mensaje = "";
         int maxPorFila = 0;
         for (int fila = 0; fila < mapa.length; fila++) {
             int contador = 0;
             for (int col = 0; col < mapa[fila].length; col++) {
-                if (mapa[fila][col] != "o") {
+                if (mapa[fila][col].equals("0")) {
                     contador++;
                 }
             }
@@ -185,18 +202,17 @@ public class Sistema implements IObligatorio {
         for (int col = 0; col < mapa[0].length; col++) {
             int contadorCol = 0;
             for (int fila = 0; fila < mapa.length; fila++) {
-                // usar Equals
-                if (mapa[fila][col] != "o") {
+                if (mapa[fila][col].equals("0")) {
                     contadorCol++;
                 }
-            }            
+            }
             if (contadorCol > maxPorCol) {
                 maxPorCol = contadorCol;
                 contadorColumnasAscendentes++;
-            }else{
+            } else {
                 contadorColumnasAscendentes = 0;
             }
-            if(contadorColumnasAscendentes >= 3){
+            if (contadorColumnasAscendentes >= 3) {
                 existe = true;
             }
         }
@@ -211,7 +227,7 @@ public class Sistema implements IObligatorio {
 
         return Retorno.ok(mensaje);
     }
-    
+
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
         return Retorno.noImplementada();
