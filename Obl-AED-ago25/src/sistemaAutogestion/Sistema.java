@@ -171,8 +171,18 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarUsuarios() {
-        Lista<Usuario> retornoListaUsuarios = listaUsuario;
-        return Retorno.ok();
+        String res = "";
+        String sep = "";
+
+        //Nodo aux = listaUsuario.getInicio();   SACAR?
+        
+        while (aux != null) {
+            Usuario u = (Usuario) aux.getDato();
+            res += sep + u.toString();   // nombre#cedula
+            sep = "|";
+            aux = aux.getSiguiente();
+        }
+        return Retorno.ok(res);
     }
 
     @Override

@@ -64,7 +64,9 @@ public class Usuario implements IValidable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "cedula=" + cedula + ", nombre=" + nombre + '}';
+        //return "Usuario{"+ "" + "cedula=" + cedula + ", nombre=" + nombre + '}';
+        
+        return nombre + "#" + cedula;
     }
 
     @Override
