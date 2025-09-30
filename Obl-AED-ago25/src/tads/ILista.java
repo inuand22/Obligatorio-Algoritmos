@@ -28,6 +28,10 @@ public interface ILista<T> {
 
     public Object obtenerElemento(String valor);
 
+    public int getCantidadElementos();
+
+    public Object obtenerElementoPosicion(int pos);
+
     /*
     public void agregarOrd(int n);
 

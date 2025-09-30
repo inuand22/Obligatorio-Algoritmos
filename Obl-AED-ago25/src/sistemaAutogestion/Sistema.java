@@ -173,15 +173,15 @@ public class Sistema implements IObligatorio {
     public Retorno listarUsuarios() {
         String res = "";
         String sep = "";
+        int contador = 1;
 
-        //Nodo aux = listaUsuario.getInicio();   SACAR?
-        
-        while (aux != null) {
-            Usuario u = (Usuario) aux.getDato();
-            res += sep + u.toString();   // nombre#cedula
+        while (contador <= listaUsuario.getCantidadElementos()) {
+            Usuario u = (Usuario) listaUsuario.obtenerElementoPosicion(contador);
+            res += sep + u.toString();
             sep = "|";
-            aux = aux.getSiguiente();
+            contador++;
         }
+
         return Retorno.ok(res);
     }
 

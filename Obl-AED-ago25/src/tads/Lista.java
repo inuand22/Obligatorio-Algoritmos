@@ -88,4 +88,29 @@ public class Lista<T> implements ILista {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public int getCantidadElementos() {
+        return cantidadElementos;
+    }
+
+    @Override
+    public Object obtenerElementoPosicion(int pos) {
+        if (pos < 1 || pos > cantidadElementos) {
+            return null;
+        }
+
+        int contador = 1;
+        Nodo aux = inicio;
+
+        while (aux != null) {
+            if (contador == pos) {
+                return aux.getDato();
+            }
+            aux = aux.getSiguiente();
+            contador++;
+        }
+
+        return null;
+    }
+
 }
