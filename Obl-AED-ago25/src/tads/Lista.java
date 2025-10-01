@@ -4,7 +4,6 @@
  */
 package tads;
 
-import dominio.Identificable;
 import java.util.Set;
 
 /**
@@ -55,17 +54,20 @@ public class Lista<T> implements ILista {
     }
 
     @Override
-    public Object obtenerElemento(String valor) {
+    public Object obtenerElemento(Object elemento) {
         Nodo aux = inicio;
-        while (aux != null) {
-            Object dato = aux.getDato();
-            Identificable obj = (Identificable) dato;
-            if (obj.getPK() == valor) {
-                return dato;
+        boolean esta = false;
+        T retorno = null;
+
+        while ((aux != null) && (!esta)) {
+            if (aux.getDato().equals(elemento)) {
+                esta = true;
+                retorno = (T) aux.getDato();
+            } else {
+                aux = aux.getSiguiente();
             }
-            aux = aux.getSiguiente();
         }
-        return null;
+        return retorno;
     }
 
     @Override
