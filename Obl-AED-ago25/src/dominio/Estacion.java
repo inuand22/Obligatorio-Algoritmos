@@ -25,7 +25,10 @@ public class Estacion implements IValidable {
     public Estacion(String Nombre, String Barrio, int Capacidad) {
         nombre = Nombre;
         barrio = Barrio;
-        capacidad = Capacidad;
+        capacidad = Capacidad;        
+        bicicletasEnEstacion = null;
+        usuariosEnEsperaAlquilar = null;
+        usuarioEnEsperaAnclar = null;
         Validar();
     }
 

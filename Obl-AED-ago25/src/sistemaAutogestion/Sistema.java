@@ -21,8 +21,6 @@ public class Sistema implements IObligatorio {
     private Lista<Estacion> listaEstacion;
     private Lista<Mantenimiento> listaMantenimiento;
     private ListaSEO<Usuario> listaUsuario;
-    private Lista<Bicicleta> listaBicicletasEnMantenimiento;
-    private Lista<Bicicleta> listaBicicletasEnDeposito;
     private Lista<Alquiler> listaUltimosAlquileres;
 
     public Sistema() {
@@ -31,11 +29,9 @@ public class Sistema implements IObligatorio {
         listaBicicleta = new Lista<Bicicleta>();
         deposito = new Deposito();
         deposito.setNombre("Centro");
-        deposito.setBicicletasEnMantenimiento(listaBicicletasEnMantenimiento);
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new ListaSEO<Usuario>();
-        listaBicicletasEnDeposito = new Lista<Bicicleta>();
         listaUltimosAlquileres = new Lista<Alquiler>();
     }
 
@@ -45,11 +41,9 @@ public class Sistema implements IObligatorio {
         listaBarrio = new Lista<Barrio>();
         listaBicicleta = new Lista<Bicicleta>();
         deposito.setNombre("Centro");
-        deposito.setBicicletasEnMantenimiento(listaBicicletasEnMantenimiento);
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new ListaSEO<Usuario>();
-        listaBicicletasEnDeposito = new Lista<Bicicleta>();
         listaUltimosAlquileres = new Lista<Alquiler>();
         return Retorno.ok();
     }
@@ -82,6 +76,7 @@ public class Sistema implements IObligatorio {
         Bicicleta bicicleta = new Bicicleta(codigo, t);
         if (!listaBicicleta.existeElemento(codigo)) {
             listaBicicleta.agregarInicio(codigo);
+            deposito.setBicicletasEnMantenimiento(bicicleta);
             return Retorno.ok();
         } else {
             return Retorno.error4();
@@ -103,7 +98,7 @@ public class Sistema implements IObligatorio {
             }
             Mantenimiento mantenimiento = new Mantenimiento(codigo, motivo);
             bicicleta.setEnMantenimiento(true);
-            listaBicicletasEnMantenimiento.agregarInicio(bicicleta);
+            deposito.setBicicletasEnMantenimiento(bicicleta);
             return Retorno.ok();
         }
         return Retorno.error2();
@@ -196,8 +191,18 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarBicisEnDeposito() {
-        Lista<Bicicleta> retornoListaUsuarios = listaBicicletasEnDeposito;
-        return Retorno.noImplementada();
+        String res = "";
+        String sep = "";
+        int contador = 1;
+        Lista<Bicicleta> retornoListaBicis = deposito.getBicicletasEnMantenimiento();
+        while (contador <= retornoListaBicis.getCantidadElementos()) {
+            Bicicleta b = (Bicicleta) listaUsuario.obtenerElementoPosicion(contador);
+            res += sep + b.toString();
+            sep = "|";
+            contador++;
+        }
+
+        return Retorno.ok(res);
     }
 
     @Override
