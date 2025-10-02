@@ -10,12 +10,16 @@ import java.util.Objects;
  *
  * @author USUARIO
  */
-public class Bicicleta implements IValidable {
+public class Bicicleta implements IValidable, Comparable<Bicicleta> {
 
     private String codigo;
     private Tipo tipo;
     private boolean enMantenimiento;
     private boolean estaAlquilada;
+
+    public Bicicleta() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     public enum Tipo {
         URBANA,
@@ -96,4 +100,8 @@ public class Bicicleta implements IValidable {
         }
     }
 
+    @Override
+    public int compareTo(Bicicleta o) {
+        return this.codigo.compareTo(o.codigo);
+    }
 }

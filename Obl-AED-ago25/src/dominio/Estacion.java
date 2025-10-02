@@ -5,7 +5,8 @@
 package dominio;
 
 import java.util.Objects;
-import tads.Lista;
+import tads.Lista.Lista;
+import tads.ListaSEO.ListaSEO;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Estacion implements IValidable {
     private String barrio;
     private int capacidad;
 
-    private Lista<Bicicleta> bicicletasEnEstacion = new Lista<Bicicleta();
+    private ListaSEO<Bicicleta> bicicletasEnEstacion = new ListaSEO<Bicicleta>();
     private Lista<Usuario> usuariosEnEsperaAlquilar = new Lista<Usuario>();
     private Lista<Usuario> usuarioEnEsperaAnclar = new Lista<Usuario>();
 
@@ -52,11 +53,11 @@ public class Estacion implements IValidable {
         this.capacidad = capacidad;
     }
 
-    public Lista<Bicicleta> getBicicletasEnEstacion() {
+    public ListaSEO<Bicicleta> getBicicletasEnEstacion() {
         return bicicletasEnEstacion;
     }
 
-    public void setBicicletasEnEstacion(Lista<Bicicleta> bicicletasEnEstacion) {
+    public void setBicicletasEnEstacion(ListaSEO<Bicicleta> bicicletasEnEstacion) {
         this.bicicletasEnEstacion = bicicletasEnEstacion;
     }
 

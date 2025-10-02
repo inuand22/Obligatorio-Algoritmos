@@ -8,8 +8,9 @@ import dominio.Deposito;
 import dominio.Estacion;
 import dominio.Mantenimiento;
 import dominio.Usuario;
-import tads.Nodo;
-import tads.Lista;
+import tads.Lista.Nodo;
+import tads.Lista.Lista;
+import tads.ListaSEO.ListaSEO;
 
 public class Sistema implements IObligatorio {
 
@@ -19,7 +20,7 @@ public class Sistema implements IObligatorio {
     private final Deposito deposito;
     private Lista<Estacion> listaEstacion;
     private Lista<Mantenimiento> listaMantenimiento;
-    private Lista<Usuario> listaUsuario;
+    private ListaSEO<Usuario> listaUsuario;
     private Lista<Bicicleta> listaBicicletasEnMantenimiento;
     private Lista<Bicicleta> listaBicicletasEnDeposito;
 
@@ -32,7 +33,7 @@ public class Sistema implements IObligatorio {
         deposito.setBicicletasEnMantenimiento(listaBicicletasEnMantenimiento);
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
-        listaUsuario = new Lista<Usuario>();
+        listaUsuario = new ListaSEO<Usuario>();
         listaBicicletasEnDeposito = new Lista<Bicicleta>();
     }
 
@@ -45,7 +46,7 @@ public class Sistema implements IObligatorio {
         deposito.setBicicletasEnMantenimiento(listaBicicletasEnMantenimiento);
         listaEstacion = new Lista<Estacion>();
         listaMantenimiento = new Lista<Mantenimiento>();
-        listaUsuario = new Lista<Usuario>();
+        listaUsuario = new ListaSEO<Usuario>();
         listaBicicletasEnDeposito = new Lista<Bicicleta>();
         return Retorno.ok();
     }
@@ -65,7 +66,7 @@ public class Sistema implements IObligatorio {
     public Retorno registrarUsuario(String cedula, String nombre) {
         Usuario usuario = new Usuario(cedula, nombre);
         if (!listaUsuario.existeElemento(usuario)) {
-            listaUsuario.agregarInicio(usuario);
+            listaUsuario.agregarOrdenado(usuario);
             return Retorno.ok();
         } else {
             return Retorno.error1();
@@ -88,7 +89,9 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         if (listaBicicleta.existeElemento(codigo)) {
-            Bicicleta bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(codigo);
+            Bicicleta bicicleta = new Bicicleta();
+            bicicleta.setCodigo(codigo);
+            bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(bicicleta);
             if (bicicleta.isEstaAlquilada()) {
                 return Retorno.error3(); //bicicleta actualmente alquilada
             }
@@ -109,7 +112,9 @@ public class Sistema implements IObligatorio {
             return Retorno.error1();//Parametros null o vacío
         }
         if (listaBicicleta.existeElemento(codigo)) {
-            Bicicleta bicicleta = (Bicicleta) listaBicicletasEnMantenimiento.obtenerElemento(codigo);
+            Bicicleta bicicleta = new Bicicleta();
+            bicicleta.setCodigo(codigo);
+            bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(bicicleta);
             if (bicicleta == null) {
                 return Retorno.error3(); //No se encontró bicicleta en mantenimiento
             }
@@ -159,11 +164,12 @@ public class Sistema implements IObligatorio {
             return Retorno.error1();//Parametros null o vacío
         }
         if (cedula.length() != 8) {
-            return Retorno.error2();
+            return Retorno.error2(); //Formato de cedula invalido
         }
-        Usuario usuario = (Usuario) listaUsuario.obtenerElemento(cedula);
+        Usuario usuario = new Usuario();
+        usuario = (Usuario) listaUsuario.obtenerElemento(usuario);
         if (usuario == null) {
-            return Retorno.error3(); //No se encontró bicicleta en mantenimiento
+            return Retorno.error3(); //Usuario inexistente
         } else {
             return Retorno.ok();
         }

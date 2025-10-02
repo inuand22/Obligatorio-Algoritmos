@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author USUARIO
  */
-public class Usuario implements IValidable {
+public class Usuario implements IValidable, Comparable<Usuario> {
 
     private String cedula;
     private String nombre;
@@ -21,6 +21,10 @@ public class Usuario implements IValidable {
         nombre = Nombre;
         enEspera = false;
         Validar();
+    }
+
+    public Usuario() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public String getCedula() {
@@ -65,7 +69,7 @@ public class Usuario implements IValidable {
     @Override
     public String toString() {
         //return "Usuario{"+ "" + "cedula=" + cedula + ", nombre=" + nombre + '}';
-        
+
         return nombre + "#" + cedula;
     }
 
@@ -82,4 +86,10 @@ public class Usuario implements IValidable {
             throw new IllegalArgumentException("El nombre no puede ser nulo ni vacío");
         }
     }
+
+    @Override
+    public int compareTo(Usuario o) {
+        return this.nombre.compareTo(o.nombre);
+    }
+
 }

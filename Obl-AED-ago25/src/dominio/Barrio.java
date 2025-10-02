@@ -5,7 +5,7 @@
 package dominio;
 
 import java.util.Objects;
-import tads.Lista;
+import tads.Lista.Lista;
 
 /**
  *
