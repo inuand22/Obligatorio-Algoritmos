@@ -18,7 +18,6 @@ public class Bicicleta implements IValidable, Comparable<Bicicleta> {
     private boolean estaAlquilada;
 
     public Bicicleta() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public enum Tipo {
@@ -69,7 +68,13 @@ public class Bicicleta implements IValidable, Comparable<Bicicleta> {
 
     @Override
     public String toString() {
-        return "Bicicleta{" + "codigo=" + codigo + ", tipo=" + tipo + '}';
+        String estado = "";
+        if (enMantenimiento) {
+            estado = "Mantenimiento";
+        } else {
+            estado = "Disponible";
+        }
+        return codigo + "#" + tipo + "#" + estado;
     }
 
     @Override

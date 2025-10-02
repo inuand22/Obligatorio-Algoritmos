@@ -24,7 +24,6 @@ public class Usuario implements IValidable, Comparable<Usuario> {
     }
 
     public Usuario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public String getCedula() {
@@ -68,14 +67,11 @@ public class Usuario implements IValidable, Comparable<Usuario> {
 
     @Override
     public String toString() {
-        //return "Usuario{"+ "" + "cedula=" + cedula + ", nombre=" + nombre + '}';
-
         return nombre + "#" + cedula;
     }
 
     @Override
     public void Validar() {
-        //PREGUNTAR AL PROFE, PORQUE NO QUEREMOS QUE LA CEDULA LLEVE LETRAS, SI HAY QUE VERIFICARLO
         if (cedula == null || cedula.trim().isEmpty()) {
             throw new IllegalArgumentException("La cédula no puede ser nula ni vacía");
         }
