@@ -72,22 +72,58 @@ public class Lista<T> implements ILista {
 
     @Override
     public void agregarFinal(Object n) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Nodo nuevo = new Nodo();
+        nuevo.setDato(n);
+        nuevo.setSiguiente(null);
+
+        if (inicio == null) {
+            inicio = nuevo;
+        } else {
+            Nodo aux = inicio;
+            while (aux.getSiguiente() != null) {
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(nuevo);
+        }
+        cantidadElementos++;
     }
 
     @Override
     public void borrarInicio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (inicio == null) {
+            return;
+        }
+        inicio = inicio.getSiguiente();
+        cantidadElementos--;
     }
 
     @Override
     public void borrarFin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (inicio == null) {
+            return;
+        }
+        if (inicio.getSiguiente() == null) {
+            inicio = null;
+        } else {
+            Nodo aux = inicio;
+            while (aux.getSiguiente().getSiguiente() != null) {
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(null);
+        }
+        cantidadElementos--;
     }
 
     @Override
     public void mostrar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Nodo aux = inicio;
+        String texto = "";
+        while (aux != null) {
+            texto += (aux.getDato().toString()) + " ";
+            aux = aux.getSiguiente();
+        }
+        System.out.println(texto);
+
     }
 
     @Override

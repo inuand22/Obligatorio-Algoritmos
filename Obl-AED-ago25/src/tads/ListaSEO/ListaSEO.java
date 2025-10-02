@@ -12,25 +12,25 @@ import java.util.Set;
  * @author USUARIO
  */
 public class ListaSEO<T extends Comparable> implements IListaSEO {
-    
+
     private Nodo inicio;
     private int cantidadElementos;
-    
+
     public ListaSEO() {
         inicio = null;
         cantidadElementos = 0;
     }
-    
+
     @Override
     public boolean esVacia() {
         return inicio == null;
     }
-    
+
     @Override
     public void vaciar() {
         inicio = null;
     }
-    
+
     @Override
     public void agregarInicio(Comparable n) {
         Nodo nodo = new Nodo();
@@ -39,42 +39,77 @@ public class ListaSEO<T extends Comparable> implements IListaSEO {
         inicio = nodo;
         cantidadElementos++;
     }
-    
+
     @Override
     public void agregarFinal(Comparable n) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Nodo nuevo = new Nodo();
+        nuevo.setDato(n);
+        nuevo.setSiguiente(null);
 
+        if (inicio == null) {
+            inicio = nuevo;
+        } else {
+            Nodo aux = inicio;
+            while (aux.getSiguiente() != null) {
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(nuevo);
+        }
+        cantidadElementos++;
     }
-    
+
     @Override
     public void borrarInicio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (inicio == null) {
+            return;
+        }
+        inicio = inicio.getSiguiente();
+        cantidadElementos--;
     }
-    
+
     @Override
     public void borrarFin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (inicio == null) {
+            return;
+        }
+        if (inicio.getSiguiente() == null) {
+            inicio = null;
+        } else {
+            Nodo aux = inicio;
+            while (aux.getSiguiente().getSiguiente() != null) {
+                aux = aux.getSiguiente();
+            }
+            aux.setSiguiente(null);
+        }
+        cantidadElementos--;
     }
-    
+
     @Override
     public void mostrar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Nodo aux = inicio;
+        String texto = "";
+        while (aux != null) {
+            texto += (aux.getDato().toString()) + " ";
+            aux = aux.getSiguiente();
+        }
+        System.out.println(texto);
+
     }
-    
+
     @Override
     public int getCantidadElementos() {
         return cantidadElementos;
     }
-    
+
     @Override
     public Object obtenerElementoPosicion(int pos) {
         if (pos < 1 || pos > cantidadElementos) {
             return null;
         }
-        
+
         int contador = 1;
         Nodo aux = inicio;
-        
+
         while (aux != null) {
             if (contador == pos) {
                 return aux.getDato();
@@ -82,10 +117,10 @@ public class ListaSEO<T extends Comparable> implements IListaSEO {
             aux = aux.getSiguiente();
             contador++;
         }
-        
+
         return null;
     }
-    
+
     @Override
     public void agregarOrdenado(Comparable n) {
         if (esVacia()) {
@@ -113,7 +148,7 @@ public class ListaSEO<T extends Comparable> implements IListaSEO {
             }
         }
     }
-    
+
     @Override
     public boolean existeElemento(Comparable n) {
         boolean existe = false;
@@ -127,13 +162,13 @@ public class ListaSEO<T extends Comparable> implements IListaSEO {
         }
         return existe;
     }
-    
+
     @Override
     public Object obtenerElemento(Comparable elemento) {
         Nodo aux = inicio;
         boolean esta = false;
         T retorno = null;
-        
+
         while ((aux != null) && (!esta)) {
             if (aux.getDato().equals(elemento)) {
                 esta = true;
@@ -144,5 +179,5 @@ public class ListaSEO<T extends Comparable> implements IListaSEO {
         }
         return retorno;
     }
-    
+
 }

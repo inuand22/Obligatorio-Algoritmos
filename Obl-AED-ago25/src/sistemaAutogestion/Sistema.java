@@ -23,6 +23,7 @@ public class Sistema implements IObligatorio {
     private ListaSEO<Usuario> listaUsuario;
     private Lista<Bicicleta> listaBicicletasEnMantenimiento;
     private Lista<Bicicleta> listaBicicletasEnDeposito;
+    private Lista<Alquiler> listaUltimosAlquileres;
 
     public Sistema() {
         listaAlquiler = new Lista<Alquiler>();
@@ -35,6 +36,7 @@ public class Sistema implements IObligatorio {
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new ListaSEO<Usuario>();
         listaBicicletasEnDeposito = new Lista<Bicicleta>();
+        listaUltimosAlquileres = new Lista<Alquiler>();
     }
 
     @Override
@@ -48,6 +50,7 @@ public class Sistema implements IObligatorio {
         listaMantenimiento = new Lista<Mantenimiento>();
         listaUsuario = new ListaSEO<Usuario>();
         listaBicicletasEnDeposito = new Lista<Bicicleta>();
+        listaUltimosAlquileres = new Lista<Alquiler>();
         return Retorno.ok();
     }
 
