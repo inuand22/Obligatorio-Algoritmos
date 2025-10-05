@@ -21,6 +21,12 @@ public class Test3_01ObtenerUsuario {
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals("Usuario01#12345678", retorno.getValorString());
     }
+    
+     @Test
+    public void obtenerUsuarioError1() {
+        s.registrarUsuario("", "Usuario01");
+        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
+    }
 
     @Test
     public void obtenerUsuarioError01() {

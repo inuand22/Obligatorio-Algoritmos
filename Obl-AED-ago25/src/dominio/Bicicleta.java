@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author USUARIO
  */
-public class Bicicleta implements IValidable, Comparable<Bicicleta> {
+public class Bicicleta implements Comparable<Bicicleta> {
 
     private String codigo;
     private Tipo tipo;
@@ -31,7 +31,13 @@ public class Bicicleta implements IValidable, Comparable<Bicicleta> {
         this.tipo = tipo;
         enMantenimiento = false;
         estaAlquilada = false;
-        Validar();
+    }
+
+    public Bicicleta(String codigo, Tipo tipo, boolean EnMantenimiento, boolean EstaAlquilada) {
+        this.codigo = codigo;
+        this.tipo = tipo;
+        enMantenimiento = EnMantenimiento;
+        estaAlquilada = estaAlquilada;
     }
 
     public String getCodigo() {
@@ -90,19 +96,6 @@ public class Bicicleta implements IValidable, Comparable<Bicicleta> {
         }
         final Bicicleta other = (Bicicleta) obj;
         return Objects.equals(this.codigo, other.codigo);
-    }
-
-    @Override
-    public void Validar() {
-        if (codigo == null || codigo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El código no puede ser nulo ni vacío");
-        }
-        if (codigo.length() != 6) {
-            throw new IllegalArgumentException("El código debe tener exactamente 6 caracteres");
-        }
-        if (tipo == null) {
-            throw new IllegalArgumentException("El tipo de bicicleta no puede ser nulo");
-        }
     }
 
     @Override

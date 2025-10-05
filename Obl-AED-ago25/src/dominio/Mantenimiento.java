@@ -8,7 +8,7 @@ package dominio;
  *
  * @author USUARIO
  */
-public class Mantenimiento implements IValidable {
+public class Mantenimiento {
 
     private String codigo;
     private String motivo;
@@ -16,7 +16,6 @@ public class Mantenimiento implements IValidable {
     public Mantenimiento(String codigo, String motivo) {
         this.codigo = codigo;
         this.motivo = motivo;
-        Validar();
     }
 
     public String getCodigo() {
@@ -40,13 +39,4 @@ public class Mantenimiento implements IValidable {
         return "Mantenimiento{" + "codigo=" + codigo + ", motivo=" + motivo + '}';
     }
 
-    @Override
-    public void Validar() {
-        if (codigo == null || codigo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El código de bicicleta no puede ser nulo ni vacío");
-        }
-        if (motivo == null || motivo.trim().isEmpty()) {
-            throw new IllegalArgumentException("El motivo no puede ser nulo ni vacío");
-        }
-    }
 }

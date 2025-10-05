@@ -8,7 +8,7 @@ package dominio;
  *
  * @author USUARIO
  */
-public class Alquiler implements IValidable {
+public class Alquiler{
 
     private String cedula;
     private String nombreEstacion;
@@ -17,7 +17,6 @@ public class Alquiler implements IValidable {
     public Alquiler(String Cedula, String NombreEstacion) {
         cedula = Cedula;
         nombreEstacion = NombreEstacion;
-        Validar();
     }
 
     public String getCedula() {
@@ -49,14 +48,5 @@ public class Alquiler implements IValidable {
         return "Alquiler{" + "cedula=" + cedula + '}';
     }
 
-    @Override
-    public void Validar() {
-        if (cedula == null || cedula.trim().isEmpty()) {
-            throw new IllegalArgumentException("La cédula no puede ser nula o vacía.");
-        }
-        if (nombreEstacion == null || nombreEstacion.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre de la estación no puede ser nulo o vacío.");
-        }
-    }
 
 }

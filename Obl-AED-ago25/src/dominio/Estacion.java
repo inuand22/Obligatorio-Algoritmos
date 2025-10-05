@@ -12,7 +12,7 @@ import tads.ListaSEO.ListaSEO;
  *
  * @author USUARIO
  */
-public class Estacion implements IValidable {
+public class Estacion  {
 
     private String nombre;
     private String barrio;
@@ -29,7 +29,6 @@ public class Estacion implements IValidable {
         bicicletasEnEstacion = null;
         usuariosEnEsperaAlquilar = null;
         usuarioEnEsperaAnclar = null;
-        Validar();
     }
 
     public String getNombre() {
@@ -100,16 +99,5 @@ public class Estacion implements IValidable {
         return Objects.equals(this.nombre, other.nombre);
     }
 
-    @Override
-    public void Validar() {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre no puede ser nulo ni vacío");
-        }
-        if (barrio == null || barrio.trim().isEmpty()) {
-            throw new IllegalArgumentException("El barrio no puede ser nulo ni vacío");
-        }
-        if (capacidad <= 0) {
-            throw new IllegalArgumentException("La capacidad debe ser mayor a cero");
-        }
-    }
+
 }

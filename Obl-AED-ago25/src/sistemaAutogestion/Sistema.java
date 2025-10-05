@@ -50,58 +50,109 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno registrarEstacion(String nombre, String barrio, int capacidad) {
+        if (nombre == null || nombre.trim().isEmpty()
+                || barrio == null || barrio.trim().isEmpty()) {
+            return Retorno.error1();
+        }
+
+        if (capacidad <= 0) {
+            return Retorno.error2();
+        }
+
         Estacion estacion = new Estacion(nombre, barrio, capacidad);
         if (!listaEstacion.existeElemento(estacion)) {
             listaEstacion.agregarInicio(estacion);
             return Retorno.ok();
         } else {
-            return Retorno.error1();
+            return Retorno.error3();
         }
     }
 
     @Override
     public Retorno registrarUsuario(String cedula, String nombre) {
+        if (cedula == null || cedula.trim().isEmpty()
+                || nombre == null || nombre.trim().isEmpty()) {
+            return Retorno.error1();
+        }
+
+        if (cedula.length() != 8) {
+            return Retorno.error2();
+        }
+
         Usuario usuario = new Usuario(cedula, nombre);
+
         if (!listaUsuario.existeElemento(usuario)) {
             listaUsuario.agregarOrdenado(usuario);
             return Retorno.ok();
         } else {
-            return Retorno.error1();
+            return Retorno.error3();
         }
     }
 
     @Override
     public Retorno registrarBicicleta(String codigo, String tipo) {
-        Bicicleta.Tipo t = Bicicleta.Tipo.valueOf(tipo.trim().toUpperCase());
-        Bicicleta bicicleta = new Bicicleta(codigo, t);
-        if (!listaBicicleta.existeElemento(codigo)) {
-            listaBicicleta.agregarInicio(codigo);
+        if (codigo == null || codigo.trim().isEmpty()
+                || tipo == null || tipo.trim().isEmpty()) {
+            return Retorno.error1();
+        }
+
+        codigo = codigo.trim();
+        tipo = tipo.trim().toUpperCase();
+
+        if (codigo.length() != 6) {
+            return Retorno.error2();
+        }
+
+        if (!(tipo.equals("URBANA") || tipo.equals("MOUNTAIN") || tipo.equals("ELECTRICA"))) {
+            return Retorno.error3();
+        }
+
+        Bicicleta bicicleta = new Bicicleta();
+        bicicleta.setCodigo(codigo);
+
+        if (!listaBicicleta.existeElemento(bicicleta)) {
+            listaBicicleta.agregarInicio(bicicleta);
             deposito.setBicicletasEnMantenimiento(bicicleta);
             return Retorno.ok();
         } else {
             return Retorno.error4();
         }
-
     }
 
     @Override
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        if (listaBicicleta.existeElemento(codigo)) {
-            Bicicleta bicicleta = new Bicicleta();
-            bicicleta.setCodigo(codigo);
-            bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(bicicleta);
-            if (bicicleta.isEstaAlquilada()) {
-                return Retorno.error3(); //bicicleta actualmente alquilada
-            }
-            if (bicicleta.isEnMantenimiento()) {
-                return Retorno.error4(); //bicicleta en mantenimiento
-            }
-            Mantenimiento mantenimiento = new Mantenimiento(codigo, motivo);
-            bicicleta.setEnMantenimiento(true);
-            deposito.setBicicletasEnMantenimiento(bicicleta);
-            return Retorno.ok();
+        if (codigo == null || codigo.trim().isEmpty()
+                || motivo == null || motivo.trim().isEmpty()) {
+            return Retorno.error1();
         }
-        return Retorno.error2();
+
+        codigo = codigo.trim();
+
+        Bicicleta key = new Bicicleta();
+        key.setCodigo(codigo);
+
+        if (!listaBicicleta.existeElemento(key)) {
+            return Retorno.error2(); // no existe la bici
+        }
+
+        Bicicleta bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(key);
+        if (bicicleta == null) {
+            return Retorno.error2();
+        }
+
+        if (bicicleta.isEstaAlquilada()) {
+            return Retorno.error3();
+        }
+        if (bicicleta.isEnMantenimiento()) {
+            return Retorno.error4();
+        }
+
+        Mantenimiento mant = new Mantenimiento(codigo, motivo);
+
+        bicicleta.setEnMantenimiento(true);
+        deposito.setBicicletasEnMantenimiento(bicicleta);
+
+        return Retorno.ok();
     }
 
     @Override

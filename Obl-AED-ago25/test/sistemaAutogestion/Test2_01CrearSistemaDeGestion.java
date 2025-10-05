@@ -8,6 +8,12 @@ public class Test2_01CrearSistemaDeGestion {
     private Retorno retorno;
     private final IObligatorio s = new Sistema();
 
+    public enum TipoBicicleta {
+        URBANA,
+        MOUNTAIN,
+        ELECTRICA
+    }
+
     @Test
     public void testCrearSistemaDeGestion() {
         retorno = s.crearSistemaDeGestion();

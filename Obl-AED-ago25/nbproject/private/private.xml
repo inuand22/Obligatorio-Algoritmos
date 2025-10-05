@@ -2,6 +2,24 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test2_01CrearSistemaDeGestion.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test2_02RegistrarEstacion.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test3_01ObtenerUsuario.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test3_02ListarUsuarios.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/sistemaAutogestion/Sistema.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Usuario.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Alquiler.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/AlquilerUsuarioBicicleta.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Barrio.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Bicicleta.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Deposito.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Estacion.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/IValidable.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/src/dominio/Mantenimiento.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test2_03RegistrarUsuario.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test2_04RegistrarBicicleta.java</file>
+            <file>file:/D:/USUARIO/Documents/NetBeansProjects/Obligatorio/Obl-AED-ago25/test/sistemaAutogestion/Test2_05MarcarMantenimiento.java</file>
+        </group>
     </open-files>
 </project-private>

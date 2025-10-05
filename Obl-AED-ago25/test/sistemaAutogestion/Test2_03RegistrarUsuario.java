@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class Test2_02RegistrarEstacion {
+public class Test2_03RegistrarUsuario {
 
     private Retorno retorno;
     private final IObligatorio s = new Sistema();
@@ -15,45 +15,45 @@ public class Test2_02RegistrarEstacion {
     }
 
     @Test
-    public void registrarEstacionOk() {
-        retorno = s.registrarEstacion("Estacion01", "Centro", 5);
+    public void registrarUsuarioOk() {
+        retorno = s.registrarUsuario("12345678", "Pedro");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
     }
 
     @Test
-    public void registrarEstacionError01() {        
-        retorno = s.registrarEstacion("", "Centro", 5);
+    public void registrarEstacionUsuario01() {        
+        retorno = s.registrarUsuario("", "Pedro");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
         
-        retorno = s.registrarEstacion("Estacion01", "", 5);
+        retorno = s.registrarUsuario("12345678", "");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        retorno = s.registrarEstacion("   ", "Centro", 5);
+        retorno = s.registrarUsuario("   ", "Pedro");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        retorno = s.registrarEstacion("Estacion01", "   ", 5);
+        retorno = s.registrarUsuario("12345678", "   ");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        retorno = s.registrarEstacion(null, "Centro", 5);
+        retorno = s.registrarUsuario(null, "Pedro");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        retorno = s.registrarEstacion("Estacion01", null, 5);
+        retorno = s.registrarUsuario("12345678", null);
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
     }
 
     @Test
-    public void registrarEstacionError02() {
-        retorno = s.registrarEstacion("Estacion01", "Centro", 0);
+    public void registrarEstacionUsuario02() {
+        retorno = s.registrarUsuario("123", "Pedro");
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
 
-        retorno = s.registrarEstacion("Estacion01", "Centro", -10);
+        retorno = s.registrarUsuario("12", "Pedro");
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
 
     @Test
-    public void registrarEstacionError03() {
-        s.registrarEstacion("Estacion01", "Centro", 5);
-        retorno = s.registrarEstacion("Estacion01", "Centro", 5);
+    public void registrarEstacionUsuario03() {
+        s.registrarUsuario("12345678", "Pedro");
+        retorno = s.registrarUsuario("12345678", "Pedro");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
 
     }

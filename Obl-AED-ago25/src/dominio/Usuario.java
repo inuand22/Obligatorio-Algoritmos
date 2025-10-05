@@ -5,12 +5,13 @@
 package dominio;
 
 import java.util.Objects;
+import sistemaAutogestion.Retorno;
 
 /**
  *
  * @author USUARIO
  */
-public class Usuario implements IValidable, Comparable<Usuario> {
+public class Usuario implements Comparable<Usuario> {
 
     private String cedula;
     private String nombre;
@@ -20,7 +21,6 @@ public class Usuario implements IValidable, Comparable<Usuario> {
         cedula = Cedula;
         nombre = Nombre;
         enEspera = false;
-        Validar();
     }
 
     public Usuario() {
@@ -68,19 +68,6 @@ public class Usuario implements IValidable, Comparable<Usuario> {
     @Override
     public String toString() {
         return nombre + "#" + cedula;
-    }
-
-    @Override
-    public void Validar() {
-        if (cedula == null || cedula.trim().isEmpty()) {
-            throw new IllegalArgumentException("La cédula no puede ser nula ni vacía");
-        }
-        if (cedula.length() <= 8) {
-            throw new IllegalArgumentException("La cédula debe tener más de 8 caracteres");
-        }
-        if (nombre == null || nombre.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre no puede ser nulo ni vacío");
-        }
     }
 
     @Override
