@@ -33,11 +33,11 @@ public class Bicicleta implements Comparable<Bicicleta> {
         estaAlquilada = false;
     }
 
-    public Bicicleta(String codigo, Tipo tipo, boolean EnMantenimiento, boolean EstaAlquilada) {
+    public Bicicleta(String codigo, Tipo tipo, boolean enMantenimiento, boolean estaAlquilada) {
         this.codigo = codigo;
         this.tipo = tipo;
-        enMantenimiento = EnMantenimiento;
-        estaAlquilada = estaAlquilada;
+        this.enMantenimiento = enMantenimiento;
+        this.estaAlquilada = estaAlquilada;
     }
 
     public String getCodigo() {

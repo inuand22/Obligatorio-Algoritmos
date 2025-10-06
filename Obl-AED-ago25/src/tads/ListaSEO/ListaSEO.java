@@ -123,30 +123,39 @@ public class ListaSEO<T extends Comparable> implements IListaSEO {
 
     @Override
     public void agregarOrdenado(Comparable n) {
+
         if (esVacia()) {
             agregarInicio(n);
-        } else {
-            Comparable datoInicio = (T) inicio.getDato();
-            if (inicio.getSiguiente() == null) {
-                if (datoInicio.compareTo(n) < 0) {
-                    agregarFinal(n);
-                } else {
-                    agregarInicio(n);
-                }
-            } else {
-                if (datoInicio.compareTo(n) > 0) {
-                    agregarInicio(n);
-                } else {
-                    Nodo aux = inicio;
-                    Nodo insert = new Nodo();
-                    insert.setDato(n);
-                    while ((aux.getSiguiente() != null) && (aux.getSiguiente().getDato().compareTo(n) < 0)) {
-                        aux = aux.getSiguiente();
-                    }
-                    insert.setSiguiente(aux);
-                }
-            }
+            return;
         }
+
+        Nodo aux = inicio;
+        while (aux != null) {
+            if (aux.getDato().equals(n)) {
+                return;
+            }
+            aux = aux.getSiguiente();
+        }
+
+        if (((Comparable) inicio.getDato()).compareTo(n) >= 0) {
+            agregarInicio(n);
+            return;
+        }
+
+        Nodo actual = inicio;
+        while (actual.getSiguiente() != null
+                && ((Comparable) actual.getSiguiente().getDato()).compareTo(n) < 0) {
+            actual = actual.getSiguiente();
+        }
+        if (actual.getSiguiente() == null) {
+            agregarFinal(n);
+            return;
+        }
+        Nodo nuevo = new Nodo();
+        nuevo.setDato(n);
+        nuevo.setSiguiente(actual.getSiguiente());
+        actual.setSiguiente(nuevo);
+        cantidadElementos++;
     }
 
     @Override

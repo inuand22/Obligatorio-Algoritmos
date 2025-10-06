@@ -109,6 +109,13 @@ public class Sistema implements IObligatorio {
 
         Bicicleta bicicleta = new Bicicleta();
         bicicleta.setCodigo(codigo);
+        if (tipo.equals("URBANA")) {
+            bicicleta.setTipo(Bicicleta.Tipo.URBANA);
+        } else if (tipo.equals("MOUNTAIN")) {
+            bicicleta.setTipo(Bicicleta.Tipo.MOUNTAIN);
+        } else {
+            bicicleta.setTipo(Bicicleta.Tipo.ELECTRICA);
+        }
 
         if (!listaBicicleta.existeElemento(bicicleta)) {
             listaBicicleta.agregarInicio(bicicleta);
@@ -158,19 +165,24 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno repararBicicleta(String codigo) {
         if (codigo == null || codigo.trim().isEmpty()) {
-            return Retorno.error1();//Parametros null o vacío
+            return Retorno.error1();
         }
-        if (listaBicicleta.existeElemento(codigo)) {
-            Bicicleta bicicleta = new Bicicleta();
-            bicicleta.setCodigo(codigo);
-            bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(bicicleta);
-            if (bicicleta == null) {
-                return Retorno.error3(); //No se encontró bicicleta en mantenimiento
-            }
-            bicicleta.setEnMantenimiento(false);
-            return Retorno.ok();
+
+        Bicicleta key = new Bicicleta();
+        key.setCodigo(codigo);
+
+        if (!listaBicicleta.existeElemento(key)) {
+            return Retorno.error2();
         }
-        return Retorno.error2();//No existe bicicleta
+
+        Bicicleta bicicleta = (Bicicleta) listaBicicleta.obtenerElemento(key);
+
+        if (!bicicleta.isEnMantenimiento()) {
+            return Retorno.error3();
+        }
+
+        bicicleta.setEnMantenimiento(false);
+        return Retorno.ok();
     }
 
     @Override
@@ -184,14 +196,73 @@ public class Sistema implements IObligatorio {
     public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
         //VERIFICAR EN SISTEMA QUE: EXISTE BICI; EXISTE ESTACION; ESTACION SIN ANCLAJES LIBRES; BICI NO DISPONIBLE (NO REPARADA == ENMANTENIMIENTO)
         //NIGÚN PARÁMETRO NULO O VACIO
-        return Retorno.noImplementada();
+        if (codigo == null || codigo.trim().isEmpty()
+                || nombreEstacion == null || nombreEstacion.trim().isEmpty()) {
+            return Retorno.error1();
+        }
+
+        Bicicleta key = new Bicicleta();
+        key.setCodigo(codigo);
+
+        if (!listaBicicleta.existeElemento(key)) {
+            return Retorno.error2();
+        }
+        Bicicleta bici = (Bicicleta) listaBicicleta.obtenerElemento(key);
+
+        Estacion eKey = new Estacion();
+        eKey.setNombre(nombreEstacion);
+        if (!listaEstacion.existeElemento(eKey)) {
+            return Retorno.error2();
+        }
+        Estacion est = (Estacion) listaEstacion.obtenerElemento(eKey);
+
+        est.setBicicletasEnEstacion(bici);
+        return Retorno.ok();
     }
 
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {
-        //NIGÚN PARÁMETRO NULO O VACIO
-        //VERIFICAR EN SISTEMA QUE: USUARIO EXISTE; EXISTE ESTACION
-        return Retorno.noImplementada();
+        if (cedula == null || cedula.trim().isEmpty()
+                || nombreEstacion == null || nombreEstacion.trim().isEmpty()) {
+            return Retorno.error1();
+        }
+        cedula = cedula.trim();
+        nombreEstacion = nombreEstacion.trim();
+
+        Usuario uKey = new Usuario(cedula, "");
+        if (!listaUsuario.existeElemento(uKey)) {
+            return Retorno.error2();
+        }
+        Usuario usuario = (Usuario) listaUsuario.obtenerElemento(uKey);
+
+        Estacion eKey = new Estacion();
+        eKey.setNombre(nombreEstacion);
+        if (!listaEstacion.existeElemento(eKey)) {
+            return Retorno.error2();
+        }
+        Estacion estacion = (Estacion) listaEstacion.obtenerElemento(eKey);
+
+        ListaSEO<Bicicleta> bicis = estacion.getBicicletasEnEstacion();
+        if (bicis == null || bicis.getCantidadElementos() == 0) {
+            return Retorno.error3();
+        }
+
+        Bicicleta seleccionada = null;
+        for (int i = 1; i <= bicis.getCantidadElementos(); i++) {
+            Bicicleta b = (Bicicleta) bicis.obtenerElementoPosicion(i);
+            if (b != null && !b.isEstaAlquilada() && !b.isEnMantenimiento()) {
+                if (seleccionada == null) {
+                    seleccionada = b;
+                }
+            }
+        }
+
+        if (seleccionada == null) {
+            return Retorno.error3();
+        }
+
+        seleccionada.setEstaAlquilada(true);
+        return Retorno.ok();
     }
 
     @Override
@@ -210,15 +281,19 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno obtenerUsuario(String cedula) {
         if (cedula == null || cedula.trim().isEmpty()) {
-            return Retorno.error1();//Parametros null o vacío
+            return Retorno.error1(); // Parametros null o vacío
         }
         if (cedula.length() != 8) {
-            return Retorno.error2(); //Formato de cedula invalido
+            return Retorno.error2(); // Formato de cedula invalido
         }
+
         Usuario usuario = new Usuario();
+        usuario.setCedula(cedula);   // <- acá seteás la PK
+
         usuario = (Usuario) listaUsuario.obtenerElemento(usuario);
+
         if (usuario == null) {
-            return Retorno.error3(); //Usuario inexistente
+            return Retorno.error3(); // Usuario inexistente
         } else {
             return Retorno.ok();
         }
@@ -247,7 +322,7 @@ public class Sistema implements IObligatorio {
         int contador = 1;
         Lista<Bicicleta> retornoListaBicis = deposito.getBicicletasEnMantenimiento();
         while (contador <= retornoListaBicis.getCantidadElementos()) {
-            Bicicleta b = (Bicicleta) listaUsuario.obtenerElementoPosicion(contador);
+            Bicicleta b = (Bicicleta) listaBicicleta.obtenerElementoPosicion(contador);
             res += sep + b.toString();
             sep = "|";
             contador++;
@@ -260,10 +335,11 @@ public class Sistema implements IObligatorio {
     public Retorno informaciónMapa(String[][] mapa) {
         String mensaje = "";
         int maxPorFila = 0;
+
         for (int fila = 0; fila < mapa.length; fila++) {
             int contador = 0;
             for (int col = 0; col < mapa[fila].length; col++) {
-                if (mapa[fila][col].equals("0")) {
+                if (!mapa[fila][col].equals("0")) {
                     contador++;
                 }
             }
@@ -271,27 +347,35 @@ public class Sistema implements IObligatorio {
                 maxPorFila = contador;
             }
         }
+
         int maxPorCol = 0;
         boolean existe = false;
-        int contadorColumnasAscendentes = 0;
+        int contadorColumnasAscendentes = 1;
+        int ultimoConteo = -1;
+
         for (int col = 0; col < mapa[0].length; col++) {
             int contadorCol = 0;
             for (int fila = 0; fila < mapa.length; fila++) {
-                if (mapa[fila][col].equals("0")) {
+                if (!mapa[fila][col].equals("0")) {
                     contadorCol++;
                 }
             }
             if (contadorCol > maxPorCol) {
                 maxPorCol = contadorCol;
+            }
+
+            if (ultimoConteo != -1 && contadorCol > ultimoConteo) {
                 contadorColumnasAscendentes++;
             } else {
-                contadorColumnasAscendentes = 0;
+                contadorColumnasAscendentes = 1;
             }
             if (contadorColumnasAscendentes >= 3) {
                 existe = true;
             }
+            ultimoConteo = contadorCol;
         }
-        String tipo = "";
+
+        String tipo;
         if (maxPorFila == maxPorCol) {
             tipo = "ambas";
         } else if (maxPorFila > maxPorCol) {
@@ -299,6 +383,9 @@ public class Sistema implements IObligatorio {
         } else {
             tipo = "columna";
         }
+
+        int maxGlobal = Math.max(maxPorFila, maxPorCol);
+        mensaje = maxGlobal + "#" + tipo + "|" + (existe ? "existe" : "no existe");
 
         return Retorno.ok(mensaje);
     }

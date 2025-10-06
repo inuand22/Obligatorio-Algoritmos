@@ -12,7 +12,7 @@ import tads.ListaSEO.ListaSEO;
  *
  * @author USUARIO
  */
-public class Estacion  {
+public class Estacion {
 
     private String nombre;
     private String barrio;
@@ -25,10 +25,10 @@ public class Estacion  {
     public Estacion(String Nombre, String Barrio, int Capacidad) {
         nombre = Nombre;
         barrio = Barrio;
-        capacidad = Capacidad;        
-        bicicletasEnEstacion = null;
-        usuariosEnEsperaAlquilar = null;
-        usuarioEnEsperaAnclar = null;
+        capacidad = Capacidad;
+    }
+
+    public Estacion() {
     }
 
     public String getNombre() {
@@ -59,8 +59,8 @@ public class Estacion  {
         return bicicletasEnEstacion;
     }
 
-    public void setBicicletasEnEstacion(ListaSEO<Bicicleta> bicicletasEnEstacion) {
-        this.bicicletasEnEstacion = bicicletasEnEstacion;
+    public void setBicicletasEnEstacion(Bicicleta bicicleta) {
+        this.bicicletasEnEstacion.agregarOrdenado(bicicleta);
     }
 
     public Lista<Usuario> getUsuariosEnEsperaAlquilar() {
@@ -98,6 +98,5 @@ public class Estacion  {
         final Estacion other = (Estacion) obj;
         return Objects.equals(this.nombre, other.nombre);
     }
-
 
 }

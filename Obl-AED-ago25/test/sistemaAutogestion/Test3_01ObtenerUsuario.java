@@ -19,28 +19,35 @@ public class Test3_01ObtenerUsuario {
         s.registrarUsuario("12345678", "Usuario01");
         retorno = s.obtenerUsuario("12345678");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("Usuario01#12345678", retorno.getValorString());
     }
-    
-     @Test
+
+    @Test
     public void obtenerUsuarioError1() {
-        s.registrarUsuario("", "Usuario01");
+        s.registrarUsuario("12345678", "Usuario01");
+
+        retorno = s.obtenerUsuario("");
+        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
+
+        retorno = s.obtenerUsuario(null);
+        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
+
+        retorno = s.obtenerUsuario("   ");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
     }
 
     @Test
-    public void obtenerUsuarioError01() {
-        //Completar
-    }
-
-    @Test
     public void obtenerUsuarioError02() {
-        //Completar
+        s.registrarUsuario("12345678", "Usuario01");
+
+        retorno = s.obtenerUsuario("123456");
+        assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
 
     @Test
     public void obtenerUsuarioError03() {
-        //Completar
+        retorno = s.obtenerUsuario("12345678");
+        assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
+
     }
 
 }

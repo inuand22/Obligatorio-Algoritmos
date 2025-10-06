@@ -60,16 +60,35 @@ public class Test2_05MarcarMantenimiento {
 
     @Test
     public void MarcarMantenimiento03() {
-        retorno = s.registrarBicicleta("123456", "URBANA", false, true);
 
-        retorno = s.marcarEnMantenimiento("123456", "Se repara cadena de bicicleta");
+        retorno = s.registrarBicicleta("123456", "URBANA");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.registrarUsuario("12345678", "Pedro");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.registrarEstacion("Estacion01", "Centro", 5);
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.asignarBicicletaAEstacion("123456", "Estacion01");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.alquilarBicicleta("12345678", "Estacion01");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.marcarEnMantenimiento("123456", "Se repara cadena");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
     }
 
     @Test
     public void MarcarMantenimiento04() {
-        s.marcarEnMantenimiento("123456", "URBANA");
-        retorno = s.marcarEnMantenimiento("123456", "URBANA");
+        retorno = s.registrarBicicleta("222222", "URBANA");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.marcarEnMantenimiento("222222", "Cambio de frenos");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = s.marcarEnMantenimiento("222222", "Otra intervención");
         assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
 
     }

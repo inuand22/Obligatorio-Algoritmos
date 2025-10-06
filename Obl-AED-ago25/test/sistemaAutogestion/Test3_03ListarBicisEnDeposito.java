@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class Test3_02ListarUsuarios {
+public class Test3_03ListarBicisEnDeposito {
 
     private Retorno retorno;
     private final IObligatorio s = new Sistema();
@@ -15,36 +15,36 @@ public class Test3_02ListarUsuarios {
     }
 
     @Test
-    public void listarUsuariosVacio() {
-        retorno = s.listarUsuarios();
+    public void listarBiciEnDepositoVacio() {
+        retorno = s.listarBicisEnDeposito();
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals("", retorno.getValorString());
     }
 
     @Test
-    public void listarUsuariosSoloUnUsuario() {
-        retorno = s.registrarUsuario("12345678", "Pedro");
+    public void listarBiciEnDepositoUnaBici() {
+        retorno = s.registrarBicicleta("123456", "URBANA");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 
-        retorno = s.listarUsuarios();
+        retorno = s.listarBicisEnDeposito();
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("Pedro#12345678", retorno.getValorString());
+        assertEquals("123456#URBANA#Disponible", retorno.getValorString());
     }
 
     @Test
-    public void listarUsuariosIngresoOrdenado() {
-        retorno = s.registrarUsuario("12345678", "Pedro");
+    public void listarBiciEnDepositoOrdenado() {
+        retorno = s.registrarBicicleta("123456", "URBANA");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 
-        retorno = s.registrarUsuario("12345679", "Roberto");
+        retorno = s.registrarBicicleta("123455", "MOUNTAIN");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 
-        retorno = s.registrarUsuario("12335678", "Mario");
+        retorno = s.registrarBicicleta("123446", "ELECTRICA");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 
-        retorno = s.listarUsuarios();
+        retorno = s.listarBicisEnDeposito();
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("Mario#12335678|Pedro#12345678|Roberto#12345679", retorno.getValorString());
+        assertEquals("123446#ELECTRICA#Disponible|123455#MOUNTAIN#Disponible|123456#URBANA#Disponible", retorno.getValorString());
     }
 
 }
